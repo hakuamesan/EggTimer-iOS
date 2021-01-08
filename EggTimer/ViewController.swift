@@ -10,16 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let eggTime = ["Soft":5, "Medium":7, "Hard":12]
+    let eggTime = ["Soft":3, "Medium":4, "Hard":5]
+    
+    var isRunning = false
     
     var timer:Timer!
-    var count = 60
+    var count:Int = 0
     
     @IBAction func hardnessSelected(_ sender: UIButton) {
-        //print(eggTime[sender.currentTitle!])
-     
-        startTimer()
+        count = eggTime[sender.currentTitle!]!
+        if isRunning == true {
+        timer.invalidate()
+        }
         
+        titleLabel.text="Starting countdown"
+        isRunning = true
+        startTimer()
     
     }
     
@@ -30,13 +36,16 @@ class ViewController: UIViewController {
             )
     }
     
+    @IBOutlet weak var titleLabel: UILabel!
     @objc func updateTime(){
         print("\(count) seconds")
 
-        if count != 0 {
+        if count > 0 {
             count -= 1
         } else {
             timer.invalidate()
+            
+            titleLabel.text="Done"
         }
         
     }
